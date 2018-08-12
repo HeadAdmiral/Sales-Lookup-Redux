@@ -14,14 +14,6 @@
   "background": {
     "scripts": ["background.js"],
     "persistent": false
-  }/*,
-  "page_action": {
-    "default_icon": {
-      "16": "images/favicon_16.png"
-    }
-  },
-  "icons": {
-    "16": "images/favicon_16.png"
-  },*/
+  }
   "manifest_version": 2
 }
