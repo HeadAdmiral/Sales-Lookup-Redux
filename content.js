@@ -4,6 +4,20 @@ function getUnique(iterable) {
     return new Set(iterable).size;
 }
 
+function formatPrice(price) {
+    price = price.replace("(", "");
+    price = price.replace(")", "");
+    price = price.replace("$", "");
+    
+    return price
+}
+
+function getSum(total, value) {
+    total = Number(total);
+    value = Number(value);
+    return total + value;
+}
+
 function getTransactions(tableData, transactionType){
     let transactions = [];
     
@@ -17,6 +31,24 @@ function getTransactions(tableData, transactionType){
     return transactions;
 }
 
+function getRevenue(tableData, transactionType){
+    let revenue = [];
+    
+    // Adds the Transaction ID from each row in the table to an array
+    for (let i = 0; i < tableData.rows.length; i++){
+        if (tableData.rows[i].cells[1].innerText === transactionType){
+            revenue.push(tableData.rows[i].cells[7].innerText);
+        }
+    }
+    
+    for (let j = 0; j < revenue.length; j++){
+        revenue[j] = formatPrice(revenue[j]);
+    }
+
+    return revenue.length > 0 ? ("($" + revenue.reduce(getSum).toLocaleString() + ")").bold() : ("$0.00").bold();
+}
+   
+
 function createRow(table, rowHeading, quantity){
     let row = table.insertRow(table.rows.length);
     row.className = "k-footer-template";
@@ -26,6 +58,15 @@ function createRow(table, rowHeading, quantity){
         
         if (i == 0){
             cell.innerHTML = (rowHeading + " " + quantity).bold();
+        }
+        
+        if (i == 2){
+            if (rowHeading === "Returns:"){
+                cell.innerHTML = getRevenue(document.getElementsByTagName("tbody")[1], "Return");
+            }
+            else if (rowHeading === "Exchanges:"){
+                cell.innerHTML = getRevenue(document.getElementsByTagName("tbody")[1], "Exchange");
+            }
         }
     }
 }
@@ -48,6 +89,8 @@ window.onload = function(){
         let uniqueTransactions = getUnique(transactions);
         let uniqueReturns = getUnique(returns);
         let uniqueExchanges = getUnique(exchanges);
+//         let returnsRevenue = getRevenue(salesTable, "Return");
+//         let exchangesRevenue = getRevenue(salesTable, "Exchange");
         
         customersServed.innerText = "Customers Served: " + uniqueTransactions;	
        
@@ -57,6 +100,9 @@ window.onload = function(){
         
         console.log(uniqueTransactions);
         console.log(document.getElementsByTagName("td")[0]);
+        
+        
+        
 
 
         /* This works correctly, but it counts returns/exchanges as sales. You should count sales only by checking the column
