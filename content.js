@@ -5,9 +5,17 @@ function getUnique(iterable) {
 }
 
 function formatPrice(price) {
-    price = price.replace("(", "");
-    price = price.replace(")", "");
-    price = price.replace("$", "");
+    
+    if (price.indexOf("(") != -1){
+        price = price.replace("(", "");
+        price = price.replace(")", "");
+        price = price.replace("$", "");
+        price = price * -1;
+    }
+    
+    else{
+        price = price.replace("$", "");
+    }
     
     return price
 }
@@ -44,8 +52,27 @@ function getRevenue(tableData, transactionType){
     for (let j = 0; j < revenue.length; j++){
         revenue[j] = formatPrice(revenue[j]);
     }
+    
+    if (revenue.length > 0){
+        revenue = revenue.reduce(getSum).toLocaleString();
 
-    return revenue.length > 0 ? ("($" + revenue.reduce(getSum).toLocaleString() + ")").bold() : ("$0.00").bold();
+        
+        if (revenue < 0){
+            return ("($" + revenue * -1 + ")").bold(); 
+        }
+        else if (revenue == 0){
+            return ("$" + revenue + ".00").bold();
+        }
+        else{
+            return ("$" + revenue).bold();
+        }
+    }
+    
+    else{
+        return ("$0.00").bold();
+    }
+
+   
 }
    
 
