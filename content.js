@@ -64,6 +64,10 @@ function getRevenue(tableData, transactionType){
             return ("$" + revenue + ".00").bold();
         }
         else{
+            if (revenue.toString().indexOf(".") == -1){
+                return ("$" + revenue + ".00").bold();
+            }
+            
             return ("$" + revenue).bold();
         }
     }
