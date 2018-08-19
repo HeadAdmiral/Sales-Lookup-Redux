@@ -58,12 +58,17 @@ function getRevenue(tableData, transactionType){
 
         
         if (revenue < 0){
+            if (revenue.toString().indexOf(".") == -1){
+                return ("($" + revenue * -1 + ".00)").bold();
+            }
+
             return ("($" + revenue * -1 + ")").bold(); 
         }
         else if (revenue == 0){
             return ("$" + revenue + ".00").bold();
         }
         else{
+		  console.log(revenue);
             if (revenue.toString().indexOf(".") == -1){
                 return ("$" + revenue + ".00").bold();
             }
