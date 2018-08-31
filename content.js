@@ -68,7 +68,6 @@ function getRevenue(tableData, transactionType){
             return ("$" + revenue + ".00").bold();
         }
         else{
-		  console.log(revenue);
             if (revenue.toString().indexOf(".") == -1){
                 return ("$" + revenue + ".00").bold();
             }
@@ -107,12 +106,23 @@ function createRow(table, rowHeading, quantity){
     }
 }
 
+function selectElement(id, valueToSelect)
+{    
+    var element = document.getElementsByTagName(id)[0];
+    element.value = valueToSelect;
+}
+
+
 window.onload = function(){
 
     // If the current page is Sales Lookup...
     if (window.location.href.indexOf("Sales") > -1){
         console.log("===== Sales Lookup Redux =====");
         console.log("Extension Loaded.");
+	    
+	let dropdown = document.getElementsByTagName("select")[0];
+	console.log(dropdown);
+	dropdown.value = 100;
         
         let statsTable = document.getElementsByTagName("tbody")[0];
         let salesTable = document.getElementsByTagName("tbody")[1];
@@ -134,8 +144,6 @@ window.onload = function(){
         createRow(statsTable, "Exchanges:", uniqueExchanges);
         createRow(statsTable, "", "");
         
-        console.log(uniqueTransactions);
-        console.log(document.getElementsByTagName("td")[0]);
         
         
         
