@@ -112,8 +112,7 @@ function selectElement(id, valueToSelect)
     element.value = valueToSelect;
 }
 
-let dropdown = document.getElementsByTagName("select")[0];
-dropdown.remove(dropdown[2]);
+
 
 window.onload = function(){
 
@@ -123,14 +122,11 @@ window.onload = function(){
         console.log("Extension Loaded.");
 	    
 	
-	let opts = document.getElementsByTagName("option");
-	let opt = document.createElement("option");	    
-	opt.value = opt.text = 500;
-	opt.selected = "selected";
-    	dropdown.add(opt);
-	//dropdown.appendChild(opt);
-	console.log(dropdown);
-	console.log(opts);
+	let dropdownSelector = document.getElementsByClassName("k-select")[2];
+	let sortBy100 = document.getElementsByClassName("k-item")[5];
+	    
+	dropdownSelector.click();
+	sortBy100.click();
         
         let statsTable = document.getElementsByTagName("tbody")[0];
         let salesTable = document.getElementsByTagName("tbody")[1];
